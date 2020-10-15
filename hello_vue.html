@@ -1,0 +1,51 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+
+    <h1>Hello Vue!</h1>
+    <p>{{ message | uppercase}}</p> <!-- What we want this to do is have my view to display a message from the view model. You can add JavaScript in here like .toUpperCase()  -->
+    <!-- Apply filter to data with the pipe and name of the filter -->
+
+    <p>This class is ITEC {{ classCode }}, {{classname}}.</p>
+
+    <!-- In the quotations is the name of the method. The directive v-on is message that says, when the named event happens
+    call a message in the V model-->
+    <button v-on:click="addExclamation">Add !</button>
+    <button v-on:click="clear">Clear Exclamation Points</button>
+
+
+</div>
+
+<script>
+
+    let app = new Vue({
+        el: '#app',
+        data: { // This is the model which is an object
+            message: 'Welcome Web Students!',
+            classname: 'Web Client Server', 
+            classCode: 2560,
+            numberOfExclamationPoints: 1
+        },
+        methods: { // Methods and functions essentially the same thing
+            addExclamation: function() {
+                if(this.numberOfExclamationPoints < 10) {
+                    this.message = this.message + '!' // What this function will do is modify the message above
+                    this.numberOfExclamationPoints++
+                } else {
+                    alert('No more exclamation points')
+                }
+            },
+            clear: function() {
+                // This will reset the message
+                this.message = 'Welcome Web Students!'
+                this.numberOfExclamationPoints = 1
+            }
+        },
+        filters: {
+            uppercase: function(string) { // takes one arguement a string
+                return string.toUpperCase() // This function will perform some operation on the string and return the value
+            } 
+        }
+    })
+
+</script>

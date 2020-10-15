@@ -1,0 +1,47 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<div id="app">
+    <h1>Hello Vue</h1>
+
+    <label for="name">Please enter your name:</label>
+    <!-- New directive called v-model which does two way data binding. Also adds input event 
+        listener as the user types -->
+    <input v-model="name" id="name"> 
+    
+<!-- <p v-if="name.length > 0"> Or <p v-if="name"> empty string is falsy 
+        Thank you, your name is {{ name }} 
+     </p> -->
+
+    
+    <!-- Or -->
+
+    <!-- This directive v-if hides this text until user starts typing or if this condition is true -->
+    <div v-if="name">
+        <p>
+            Thank you, your name is {{ name }}
+        </p>
+
+        <button v-on:click="clear">Clear Input</button>
+    </div> 
+
+    <div v-else>
+        <p>Waiting for data to be entered.</p>
+    </div>
+
+</div>
+
+<script>
+
+    let app = new Vue ({
+        el: '#app', // el is the selector that HTML that Vue will manage. CSS selector with #
+        data: {
+            name: '' // this model connects to the input above
+        },
+        methods: {
+            clear: function() {
+                this.name = ''
+            }
+        }
+    })
+
+</script>
