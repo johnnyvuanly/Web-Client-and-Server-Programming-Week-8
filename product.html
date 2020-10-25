@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Page</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+<body>
+
+<div id="app">
+    
+    <!-- HTML here-->
+    <!-- Data from Vue displayed in template -->
+    <h1>{{ productName }}</h1>
+
+    <!-- v-bind sets HTML attribute values using Vue data -->
+    <!-- Setting the src attribute for an image -->
+    <img v-bind:src="image">
+
+    <p>{{ description }}</p>
+
+    <p v-if="available">This product is available!</p>
+    <!-- If and else have to be next to each other in order to work -->
+    <p v-else>Sorry, this product is not available. Please check back later</p>
+    
+    <p>Quantity Available: {{ quantityAvailable }}</p>
+
+    <ul>
+        <!-- For all the feature in the features array, display each of them in an unordered list -->
+        <li v-for="feature in features">{{ feature }}</li>
+    </ul>
+
+    <p>The maximum quantity you can order is {{ maxQuantity }}</p>
+    <button v-on:click="decreaseQuantity">-</button>
+    <input type ="number" v-model="quantity" v-on:change="verifyQuantity">
+    <button v-on:click="increaseQuantity">+</button>
+ 
+    <p class="error">{{ message }}</p>
+
+    <button v-on:click="order">Order</button>
+</div>
+
+
+
+<script>
+
+    let app = new Vue ({
+        el: "#app",
+        data: {
+            productName: 'Boots', 
+            description: 'Waterproof boots, ideal for MN winters',
+            available: true,
+            quantityAvailable: 100,
+            features: ['Warm', 'Waterproof', 'Comes in a pair', 'Comfy'],
+            image: 'Snow_Boots.png',
+
+            quantity: 1,
+            maxQuantity: 5,
+            minQuantity: 1,
+            message: ''
+        },
+        methods: {
+            // Function definitions
+            // a function attached to an object is called a method
+            // function, method.. almost the exact same thing
+            order() {
+                let orderInfo = `Thank you, you have ordered ${this.quantity} ${this.productName}`
+                alert(orderInfo)
+            },
+
+            decreaseQuantity() {
+                let newQuantity = this.quantity - 1
+                if ( newQuantity < this.minQuantity) {
+                    // error
+                    this.message = 'Minimum quanity is ' + this.minQuantity
+                } 
+                else {
+                    this.quantity = newQuantity
+                }
+            },
+            increaseQuantity() {
+                let newQuantity = this.quantity + 1
+                if ( newQuantity > this.maxQuantity) {
+                    // not allowed
+                    this.message = 'Maximum quanity is ' + this.maxQuantity
+
+                }
+                else {
+                    this.quantity = newQuantity
+                }
+            },
+            verifyQuantity() {
+                
+                this.message = ''
+                
+                if (this.quantity < this.minQuantity) {
+                    this.quantity = this.minQuantity
+                    this.quantity = this.minQuantity
+                }
+                if(this.quantity > this.maxQuantity) {
+                    this.quantity = this.maxQuantity
+                    this.quantity = this.maxQuantity
+                }
+            }
+        }
+    })
+   
+
+</script>
+
+</body>
+</html>
